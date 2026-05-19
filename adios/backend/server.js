@@ -9,16 +9,7 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-const allowedOrigins = (process.env.FRONTEND_URL || '')
-    .split(',').map(s => s.trim()).filter(Boolean);
-
-app.use(cors({
-    origin: (origin, cb) => {
-        if (!origin && process.env.NODE_ENV !== 'production') return cb(null, true);
-        if (allowedOrigins.includes(origin)) return cb(null, true);
-        cb(new Error('CORS: origen no permitido'));
-    }
-}));
+app.use(cors());
 
 app.use(express.json({ limit: '10kb' }));
 
