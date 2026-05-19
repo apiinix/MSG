@@ -44,9 +44,11 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const messageSchema = new mongoose.Schema({
-    autor: { type: String, required: true, maxlength: 30 },
-    texto: { type: String, required: true, maxlength: 500 },
-    fecha: { type: Date, default: Date.now }
+    autor:     { type: String, required: true, maxlength: 30 },
+    tipo:      { type: String, enum: ['texto', 'imagen', 'video', 'audio', 'sticker'], default: 'texto' },
+    texto:     { type: String, maxlength: 2000 },
+    contenido: { type: String },   // base64 data-URL para media
+    fecha:     { type: Date, default: Date.now }
 });
 const Message = mongoose.model('Message', messageSchema);
 
@@ -95,9 +97,13 @@ app.post('/api/login', loginLimiter, async (req, res) => {
     }
 });
 
-app.get('/api/messages', auth, async (_req, res) => {
+app.get('/api/messages', auth, async (req, res) => {
     try {
-        const messages = await Message.find().sort({ fecha: 1 }).limit(500);
+        const filter = {};
+        if (req.query.after && mongoose.isValidObjectId(req.query.after)) {
+            filter._id = { $gt: new mongoose.Types.ObjectId(req.query.after) };
+        }
+        const messages = await Message.find(filter).sort({ fecha: 1 }).limit(500);
         res.json(messages);
     } catch {
         res.status(500).json({ error: 'Error al obtener mensajes' });
@@ -106,9 +112,26 @@ app.get('/api/messages', auth, async (_req, res) => {
 
 app.post('/api/messages', auth, async (req, res) => {
     try {
-        const texto = req.body.texto?.trim();
-        if (!texto || texto.length > 500) return res.status(400).json({ error: 'Mensaje inválido' });
-        const msg = await new Message({ autor: req.user.username, texto }).save();
+        const { tipo = 'texto', texto, contenido } = req.body;
+        const validTipos = ['texto', 'imagen', 'video', 'audio', 'sticker'];
+        if (!validTipos.includes(tipo)) return res.status(400).json({ error: 'Tipo inválido' });
+
+        if (tipo === 'texto' || tipo === 'sticker') {
+            const t = typeof texto === 'string' ? texto.trim() : '';
+            if (!t || t.length > 2000) return res.status(400).json({ error: 'Mensaje inválido' });
+            const msg = await new Message({ autor: req.user.username, tipo, texto: t }).save();
+            return res.status(201).json(msg);
+        }
+
+        // Media: imagen, video, audio
+        if (typeof contenido !== 'string' || !contenido.startsWith('data:')) {
+            return res.status(400).json({ error: 'Contenido inválido' });
+        }
+        const sizeLimits = { imagen: 4_200_000, video: 9_500_000, audio: 2_800_000 };
+        if (contenido.length > sizeLimits[tipo]) {
+            return res.status(413).json({ error: 'Archivo demasiado grande' });
+        }
+        const msg = await new Message({ autor: req.user.username, tipo, contenido }).save();
         res.status(201).json(msg);
     } catch {
         res.status(500).json({ error: 'Error al guardar mensaje' });
@@ -184,152 +207,6 @@ app.delete('/api/admin/users/:id', adminAuth, async (req, res) => {
         res.json({ ok: true });
     } catch {
         res.status(500).json({ error: 'Error al borrar' });
-    }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Servidor en puerto ${PORT}`));
-
-
-const app = express();
-
-// ── CORS ─────────────────────────────────────────────────────────────────────
-// Configura FRONTEND_URL en tus variables de entorno en Render/Railway
-// Ejemplo: FRONTEND_URL=https://ianba.github.io,https://ianba.github.io/adios
-const allowedOrigins = (process.env.FRONTEND_URL || '')
-    .split(',').map(s => s.trim()).filter(Boolean);
-
-app.use(cors({
-    origin: (origin, cb) => {
-        // Permitir peticiones sin origin (apps de escritorio, Postman) solo en dev
-        if (!origin && process.env.NODE_ENV !== 'production') return cb(null, true);
-        if (allowedOrigins.includes(origin)) return cb(null, true);
-        cb(new Error('CORS: origen no permitido'));
-    }
-}));
-
-app.use(express.json({ limit: '10kb' }));
-
-// ── MongoDB ───────────────────────────────────────────────────────────────────
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ MongoDB conectado'))
-    .catch(err => { console.error('❌ MongoDB error:', err); process.exit(1); });
-
-// ── Schemas ───────────────────────────────────────────────────────────────────
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true, maxlength: 30 },
-    password: { type: String, required: true }
-});
-const User = mongoose.model('User', userSchema);
-
-const messageSchema = new mongoose.Schema({
-    autor:  { type: String, required: true, maxlength: 30 },
-    texto:  { type: String, required: true, maxlength: 500 },
-    fecha:  { type: Date, default: Date.now }
-});
-const Message = mongoose.model('Message', messageSchema);
-
-// ── Middleware de autenticación ───────────────────────────────────────────────
-function auth(req, res, next) {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'No autorizado' });
-    try {
-        req.user = jwt.verify(token, process.env.JWT_SECRET);
-        next();
-    } catch {
-        res.status(401).json({ error: 'Token inválido o expirado' });
-    }
-}
-
-// ── Rutas ─────────────────────────────────────────────────────────────────────
-
-// Health check
-app.get('/api/health', (_req, res) => res.json({ ok: true }));
-
-// Login
-app.post('/api/login', async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        if (!username || !password)
-            return res.status(400).json({ error: 'Faltan campos' });
-
-        const user = await User.findOne({ username: username.trim().toLowerCase() });
-        if (!user || !(await bcrypt.compare(password, user.password)))
-            return res.status(401).json({ error: 'Credenciales incorrectas' });
-
-        const token = jwt.sign(
-            { username: user.username },
-            process.env.JWT_SECRET,
-            { expiresIn: '7d' }
-        );
-        res.json({ token, username: user.username });
-    } catch {
-        res.status(500).json({ error: 'Error del servidor' });
-    }
-});
-
-// Obtener mensajes
-app.get('/api/messages', auth, async (_req, res) => {
-    try {
-        const messages = await Message.find().sort({ fecha: 1 }).limit(500);
-        res.json(messages);
-    } catch {
-        res.status(500).json({ error: 'Error al obtener mensajes' });
-    }
-});
-
-// Crear mensaje
-app.post('/api/messages', auth, async (req, res) => {
-    try {
-        const texto = req.body.texto?.trim();
-        if (!texto || texto.length > 500)
-            return res.status(400).json({ error: 'Mensaje inválido' });
-        const msg = await new Message({ autor: req.user.username, texto }).save();
-        res.status(201).json(msg);
-    } catch {
-        res.status(500).json({ error: 'Error al guardar mensaje' });
-    }
-});
-
-// Borrar mensaje (solo el autor puede borrar el suyo)
-app.delete('/api/messages/:id', auth, async (req, res) => {
-    try {
-        const msg = await Message.findById(req.params.id);
-        if (!msg) return res.status(404).json({ error: 'Mensaje no encontrado' });
-        if (msg.autor !== req.user.username)
-            return res.status(403).json({ error: 'No puedes borrar este mensaje' });
-        await msg.deleteOne();
-        res.json({ ok: true });
-    } catch {
-        res.status(500).json({ error: 'Error al borrar' });
-    }
-});
-
-// Setup: crear/actualizar usuarios (protegido con SETUP_KEY)
-// Llama esto UNA VEZ después de desplegar con:
-// POST /api/setup  { "setupKey": "TU_SETUP_KEY", "users": [{"username":"ianba","password":"xxx"}, {"username":"amiga","password":"yyy"}] }
-app.post('/api/setup', async (req, res) => {
-    try {
-        const { setupKey, users } = req.body;
-        if (!setupKey || setupKey !== process.env.SETUP_KEY)
-            return res.status(403).json({ error: 'Clave incorrecta' });
-        if (!Array.isArray(users) || users.length === 0)
-            return res.status(400).json({ error: 'Lista de usuarios vacía' });
-
-        const created = [];
-        for (const u of users) {
-            if (!u.username || !u.password) continue;
-            const hash = await bcrypt.hash(u.password, 12);
-            await User.updateOne(
-                { username: u.username.trim().toLowerCase() },
-                { $set: { password: hash } },
-                { upsert: true }
-            );
-            created.push(u.username.trim().toLowerCase());
-        }
-        res.json({ ok: true, created });
-    } catch {
-        res.status(500).json({ error: 'Error en setup' });
     }
 });
 

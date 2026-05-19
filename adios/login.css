@@ -78,3 +78,25 @@
     padding: 15px;
     font-size: 1.1rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA OCÉANO  🌊
+   ══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="ocean"] .login-box {
+    border-color: rgba(0, 180, 216, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 119, 182, 0.12);
+}
+[data-theme="ocean"] .login-title { color: #0077b6; }
+[data-theme="ocean"] .input-group input {
+    border-color: #48cae4;
+    background: #f0fbfc;
+}
+[data-theme="ocean"] .input-group input:focus {
+    border-color: #0077b6;
+    box-shadow: 0 0 0 4px rgba(0, 119, 182, 0.1);
+}
+[data-theme="ocean"] .login-error {
+    background: #e0f7fa;
+    color: #023e8a;
+}

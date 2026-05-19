@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💬 Nuestro Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chat.css">
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script>requireAuth();</script>
+</head>
+<body>
+
+    <!-- Corazones flotantes de fondo -->
+    <div class="bg-hearts" aria-hidden="true">
+        <span>💖</span><span>🌸</span><span>✨</span><span>💕</span>
+        <span>🌺</span><span>💗</span><span>⭐</span><span>🌷</span>
+    </div>
+
+    <div class="chat-app">
+
+        <!-- Cabecera -->
+        <header class="chat-header">
+            <a href="niga.html" class="back-btn" title="Volver">‹</a>
+            <div class="chat-avatar">💖</div>
+            <div class="chat-info">
+                <span class="chat-name">Chat privado 🌸</span>
+                <span class="chat-status" id="chatStatus">conectando...</span>
+            </div>
+            <button class="header-btn" onclick="logout()" title="Cerrar sesión">⏻</button>
+        </header>
+
+        <!-- Área de mensajes -->
+        <main class="messages-area" id="messagesArea">
+            <div class="loading-msgs" id="loadingMsgs">Cargando mensajes 🌸</div>
+        </main>
+
+        <!-- Panel de stickers -->
+        <div class="sticker-picker" id="stickerPicker">
+            <div class="sticker-tabs">
+                <button class="sticker-tab active" data-cat="amor"   onclick="showStickerCat('amor')">💖</button>
+                <button class="sticker-tab"        data-cat="feliz"  onclick="showStickerCat('feliz')">😊</button>
+                <button class="sticker-tab"        data-cat="triste" onclick="showStickerCat('triste')">🥺</button>
+                <button class="sticker-tab"        data-cat="varios" onclick="showStickerCat('varios')">🌈</button>
+            </div>
+            <div class="sticker-grid" id="stickerGrid"></div>
+        </div>
+
+        <!-- Barra de envío en progreso -->
+        <div class="sending-bar" id="sendingBar">
+            <div class="sending-dot"></div>
+            <span>Enviando archivo...</span>
+        </div>
+
+        <!-- Área de escritura -->
+        <footer class="chat-input-area">
+            <button class="input-btn sticker-btn" onclick="toggleStickerPicker()" title="Stickers">😊</button>
+
+            <label class="input-btn attach-btn" title="Foto o video">
+                📎
+                <input type="file" id="fileInput" accept="image/*,video/*"
+                       onchange="handleFileSelect(event)" hidden>
+            </label>
+
+            <button class="input-btn mic-btn" id="micBtn"
+                    onmousedown="startRecording(event)" onmouseup="stopRecording(event)"
+                    ontouchstart="startRecording(event)" ontouchend="stopRecording(event)"
+                    title="Mantén presionado para grabar audio">🎤</button>
+
+            <textarea id="msgInput" class="msg-input"
+                      placeholder="Escribe un mensaje 💕"
+                      rows="1" maxlength="2000"
+                      oninput="autoResize(this)"
+                      onkeydown="handleKeydown(event)"></textarea>
+
+            <button class="input-btn send-btn" onclick="sendText()" title="Enviar">➤</button>
+        </footer>
+
+    </div>
+
+    <!-- Lightbox para imágenes -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" id="lightboxContent" onclick="event.stopPropagation()"></div>
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    </div>
+
+    <script src="chat.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>

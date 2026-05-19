@@ -367,3 +367,66 @@ footer {
     color: #bbb;
     font-size: 0.9rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA OCÉANO  🌊
+   ══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="ocean"] body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 50%, #e1f5fe 100%);
+}
+[data-theme="ocean"] .hero h1 {
+    color: #0077b6;
+    text-shadow: 0 2px 20px rgba(0, 119, 182, 0.2);
+}
+[data-theme="ocean"] .card {
+    border-color: rgba(0, 180, 216, 0.35);
+    box-shadow: 0 8px 32px rgba(0, 119, 182, 0.07);
+}
+[data-theme="ocean"] .card:hover {
+    box-shadow: 0 16px 40px rgba(0, 119, 182, 0.13);
+}
+[data-theme="ocean"] .section-title { color: #0077b6; }
+[data-theme="ocean"] .section-title::after {
+    background: linear-gradient(90deg, #48cae4, #0077b6, #48cae4);
+}
+[data-theme="ocean"] textarea {
+    border-color: #48cae4;
+    background: linear-gradient(135deg, #f0fbfc, #e8f8fd);
+}
+[data-theme="ocean"] .btn-pink {
+    background: linear-gradient(135deg, #0077b6, #00b4d8);
+    box-shadow: 0 6px 20px rgba(0, 119, 182, 0.35);
+}
+[data-theme="ocean"] .btn-pink:hover {
+    background: linear-gradient(135deg, #023e8a, #0077b6);
+    box-shadow: 0 10px 28px rgba(0, 119, 182, 0.45);
+}
+[data-theme="ocean"] .mensaje-secreto {
+    background: linear-gradient(135deg, #e8f8fd, #caf0f8);
+    border-color: #48cae4;
+    color: #023e8a;
+}
+[data-theme="ocean"] .quote                   { color: #48cae4; }
+[data-theme="ocean"] .photo-box {
+    background: linear-gradient(135deg, #caf0f8, #ade8f4);
+    border-color: #48cae4;
+    color: #0077b6;
+    box-shadow: 0 6px 16px rgba(0, 119, 182, 0.1);
+}
+[data-theme="ocean"] #welcomeUser             { color: #0077b6; }
+[data-theme="ocean"] .logout-btn              { border-color: #48cae4; color: #0077b6; }
+[data-theme="ocean"] .logout-btn:hover        { background: #0077b6; color: white; }
+[data-theme="ocean"] .messages-list::-webkit-scrollbar-thumb { background: #48cae4; }
+[data-theme="ocean"] .msg-bubble.mine {
+    background: linear-gradient(135deg, #0096c7, #0077b6);
+}
+[data-theme="ocean"] .msg-bubble.hers {
+    background: linear-gradient(135deg, #caf0f8, #ade8f4);
+    color: #023e8a;
+}
+[data-theme="ocean"] .cta-card {
+    background: linear-gradient(135deg, rgba(178,235,242,0.7), rgba(225,245,254,0.85));
+    border-color: rgba(0, 180, 216, 0.35);
+}
+[data-theme="ocean"] footer { color: #90caf9; }
