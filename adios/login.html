@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceder 🌸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script>if (localStorage.getItem('token')) window.location.href = 'niga.html';</script>
+</head>
+<body class="login-body">
+
+    <div class="hearts">
+        <span>💖</span><span>🌸</span><span>✨</span><span>💕</span>
+        <span>🌺</span><span>💗</span><span>⭐</span><span>🌷</span>
+    </div>
+
+    <div class="login-box">
+        <div class="login-icon">🌸</div>
+        <h1 class="login-title">Acceso privado</h1>
+        <p class="login-sub">Solo para nosotras ✨</p>
+
+        <form id="loginForm" novalidate>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Tu nombre" autocomplete="username" required maxlength="30">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" required>
+            </div>
+            <div id="loginError" class="login-error hidden">Usuario o contraseña incorrectos 😢</div>
+            <button type="submit" class="btn btn-pink login-btn">Entrar 💖</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const btn = e.target.querySelector('button');
+            const err = document.getElementById('loginError');
+            err.classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+            const ok = await login(username, password);
+            if (!ok) {
+                err.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = 'Entrar 💖';
+            }
+        });
+    </script>
+
+</body>
+</html>

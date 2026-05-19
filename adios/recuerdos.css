@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #e8d5c4;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cuaderno principal */
+.notebook {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #fffdf5;
+    background-image: repeating-linear-gradient(
+        transparent 0px,
+        transparent 29px,
+        #e8d5c4 30px
+    );
+    min-height: 100vh;
+    box-shadow: 0 0 60px rgba(0,0,0,0.25), 4px 0 12px rgba(0,0,0,0.1);
+    position: relative;
+    border-left: 80px solid #c9a0dc;
+}
+
+/* Línea roja del margen */
+.notebook::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e8a0b0;
+    z-index: 1;
+}
+
+/* Espiral / agujeros */
+.notebook::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background:
+        radial-gradient(circle at 40px 50px,  #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 100px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 150px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 200px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 250px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 300px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 350px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 400px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 450px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 500px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 550px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 600px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 650px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 700px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 750px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 800px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 850px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 900px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 950px, #fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1000px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1050px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1100px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1150px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1200px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1250px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1300px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1350px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1400px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1450px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px),
+        radial-gradient(circle at 40px 1500px,#fff 8px, #8a5aa0 9px, #8a5aa0 12px, transparent 13px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Header */
+.nb-header {
+    padding: 50px 50px 40px 30px;
+    text-align: center;
+    border-bottom: 3px dashed #d4b8e8;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: linear-gradient(135deg, #e91e63, #f06292);
+    color: white;
+    text-decoration: none;
+    padding: 9px 22px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.35);
+}
+.back-btn:hover {
+    background: linear-gradient(135deg, #c2185b, #e91e63);
+    transform: translateX(-3px);
+    box-shadow: 0 6px 18px rgba(233, 30, 99, 0.45);
+}
+
+.nb-sticker {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 10px;
+    animation: rebotar 2s ease-in-out infinite;
+}
+@keyframes rebotar {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+.nb-header h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 3.8rem;
+    color: #7c3aed;
+    text-shadow: 3px 3px 0 rgba(124, 58, 237, 0.12);
+    line-height: 1;
+}
+.nb-header p {
+    font-size: 1rem;
+    color: #999;
+    margin-top: 8px;
+    font-weight: 300;
+}
+.nb-deco {
+    margin-top: 16px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0.65;
+}
+
+/* Grid de clips */
+.nb-content {
+    padding: 40px 40px 40px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+}
+
+@media (max-width: 620px) {
+    .nb-content { grid-template-columns: 1fr; }
+    .notebook { border-left: 40px solid #c9a0dc; }
+    .nb-header { padding: 50px 20px 30px 20px; }
+    .back-btn { top: 10px; right: 10px; }
+}
+
+/* Tarjeta de clip */
+.clip-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 14px;
+    padding: 22px 18px 18px;
+    box-shadow: 3px 5px 14px rgba(0,0,0,0.09);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #ead5f5;
+}
+.clip-card:nth-child(odd)  { transform: rotate(-0.7deg); }
+.clip-card:nth-child(even) { transform: rotate(0.5deg); }
+.clip-card:hover {
+    transform: rotate(0deg) scale(1.025) !important;
+    box-shadow: 6px 10px 28px rgba(124, 58, 237, 0.18);
+    z-index: 5;
+}
+
+/* Cinta adhesiva */
+.clip-tape {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 22px;
+    background: rgba(255, 230, 100, 0.75);
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+}
+
+.clip-label {
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    color: #b07ab0;
+    text-align: right;
+    margin-bottom: 3px;
+}
+.clip-date {
+    font-size: 0.72rem;
+    color: #c0b0c8;
+    margin-bottom: 6px;
+}
+.clip-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: #7c3aed;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* Slot de video */
+.video-slot {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1a1a2e;
+    margin-bottom: 12px;
+    border: 2px solid #ead5f5;
+}
+.video-slot iframe,
+.video-slot video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Placeholder vacío */
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #a0a0c0;
+    gap: 6px;
+    cursor: default;
+}
+.video-placeholder span {
+    font-size: 2.8rem;
+    opacity: 0.3;
+    line-height: 1;
+}
+.video-placeholder p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.6;
+}
+.video-placeholder small {
+    font-size: 0.65rem;
+    opacity: 0.45;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.clip-desc {
+    font-size: 0.82rem;
+    color: #999;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* Footer */
+.nb-footer {
+    text-align: center;
+    padding: 30px;
+    border-top: 2px dashed #d4b8e8;
+    color: #b07ab0;
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+}

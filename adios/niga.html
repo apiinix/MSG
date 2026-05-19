@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi mejor amiga 🌸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script>requireAuth();</script>
+</head>
+<body>
+
+    <!-- Corazones flotantes -->
+    <div class="hearts">
+        <span>💖</span><span>🌸</span><span>✨</span><span>💕</span>
+        <span>🌺</span><span>💗</span><span>⭐</span><span>🌷</span>
+    </div>
+
+    <!-- Barra de usuario -->
+    <div class="user-bar">
+        <span id="welcomeUser">Hola 🌸</span>
+        <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+
+    <header class="hero">
+        <h1>🌸 Para mi amiga favorita 🌸</h1>
+        <p>Una página hecha con todo el cariño del mundo, solo para ti.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Carta -->
+        <section class="card">
+            <h2 class="section-title">✉️ Una carta para ti</h2>
+            <textarea readonly>¡Hola! Hice esta pequeña página para recordarte lo importante que eres en mi vida. Gracias por estar siempre ahí, por cada risa, cada consejo y por los momentos tan bonitos que pasamos juntas. ¡Te quiero muchísimo!</textarea>
+        </section>
+
+        <!-- Secreto -->
+        <section class="card">
+            <h2 class="section-title">💡 Algo que debes saber</h2>
+            <button class="btn btn-pink" onclick="mostrarSecreto()">Haz clic aquí ✨</button>
+            <div id="secreto" class="mensaje-secreto hidden">
+                <span class="quote">❝</span>
+                Eres una persona increíble, valiente y divertida. El mundo es mucho más bonito contigo en él. ¡Nunca cambies tu forma de ser!
+                <span class="quote">❞</span>
+            </div>
+        </section>
+
+        <!-- Fotos -->
+        <section class="card">
+            <h2 class="section-title">📸 Nuestros recuerdos</h2>
+            <p class="sub">Imagina aquí nuestras mejores fotos juntas.</p>
+            <div class="photos">
+                <div class="photo-box">Foto 1 💖</div>
+                <div class="photo-box">Foto 2 ✨</div>
+                <div class="photo-box">Foto 3 🌸</div>
+            </div>
+        </section>
+
+        <!-- Mensajes -->
+        <section class="card messages-card">
+            <h2 class="section-title">💌 Mensajes entre nosotras</h2>
+            <div id="messagesList" class="messages-list">
+                <div class="msg-loading">Cargando mensajes... 🌸</div>
+            </div>
+            <div class="compose-area">
+                <textarea id="newMessage" placeholder="Escribe algo bonito... 💕&#10;Ctrl+Enter para enviar" maxlength="500" rows="3" onkeydown="handleMsgKey(event)"></textarea>
+                <button class="btn btn-pink send-btn" onclick="enviarMensaje()">Enviar 💌</button>
+            </div>
+        </section>
+
+        <!-- Botón cuaderno de clips -->
+        <section class="card cta-card">
+            <h2 class="section-title">🎮 Nuestros clips de juegos</h2>
+            <p class="sub">Todos esos momentos épicos (y vergonzosos) que vivimos jugando juntas.</p>
+            <a href="recuerdos.html" class="btn btn-game">📓 Abrir Cuaderno de Recuerdos</a>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Hecho con 💖 solo para ti</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

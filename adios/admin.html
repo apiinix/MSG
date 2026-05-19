@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+    <!-- Login de admin -->
+    <div id="adminLogin" class="admin-login">
+        <div class="admin-login-box">
+            <div class="admin-logo">🔐</div>
+            <h1>Panel de Administración</h1>
+            <p>Acceso restringido</p>
+            <form id="adminLoginForm" novalidate>
+                <input type="password" id="adminPassword" placeholder="Contraseña de administrador" autocomplete="off" required>
+                <div id="adminLoginError" class="error-msg hidden">Contraseña incorrecta</div>
+                <button type="submit" class="btn-admin">Acceder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel principal -->
+    <div id="adminPanel" class="admin-panel hidden">
+
+        <header class="admin-header">
+            <div>
+                <h1>🔐 Panel de Administración</h1>
+                <p class="admin-sub">Gestión de usuarios del sitio</p>
+            </div>
+            <button class="btn-logout" onclick="adminLogout()">Cerrar sesión</button>
+        </header>
+
+        <main class="admin-main">
+
+            <!-- Crear usuario -->
+            <section class="admin-card">
+                <h2>➕ Nuevo usuario</h2>
+                <form id="createUserForm" class="create-form" novalidate>
+                    <div class="form-row">
+                        <input type="text"     id="newUsername" placeholder="Nombre de usuario" maxlength="30" required autocomplete="off">
+                        <input type="password" id="newPassword" placeholder="Contraseña (mín. 6 caracteres)" required autocomplete="new-password">
+                        <button type="submit" class="btn-admin btn-create">Crear usuario</button>
+                    </div>
+                    <div id="createError"   class="error-msg   hidden"></div>
+                    <div id="createSuccess" class="success-msg hidden"></div>
+                </form>
+            </section>
+
+            <!-- Lista de usuarios -->
+            <section class="admin-card">
+                <h2>👥 Usuarios registrados</h2>
+                <div id="usersList" class="users-list">
+                    <div class="loading-msg">Cargando...</div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="admin-panel.js"></script>
+
+</body>
+</html>
