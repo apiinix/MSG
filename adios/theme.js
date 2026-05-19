@@ -3,7 +3,7 @@
 // Aplica data-theme inmediatamente para evitar parpadeo
 (function () {
     document.documentElement.setAttribute(
-        'data-theme', localStorage.getItem('theme') || 'pink'
+        'data-theme', localStorage.getItem('theme') || 'ocean'
     );
 })();
 
