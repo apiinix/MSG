@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Calendario 📅</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="calendario.css">
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script>requireAuth();</script>
+</head>
+<body>
+
+    <!-- Corazones flotantes -->
+    <div class="hearts">
+        <span>💖</span><span>🌸</span><span>✨</span><span>💕</span>
+        <span>🌺</span><span>💗</span><span>⭐</span><span>🌷</span>
+    </div>
+
+    <!-- Barra de navegación -->
+    <div class="user-bar">
+        <a href="niga.html" class="back-btn">← Volver</a>
+        <span id="welcomeUser">Hola 🌸</span>
+        <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+
+    <!-- Header -->
+    <header class="cal-header">
+        <h1>📅 Nuestro Calendario</h1>
+        <p>Lo que haremos juntas esta semana 🌸</p>
+    </header>
+
+    <!-- Navegación de semana -->
+    <div class="week-nav">
+        <button class="week-btn" onclick="cambiarSemana(-1)">‹ Anterior</button>
+        <span id="weekLabel" class="week-label">Cargando...</span>
+        <button class="week-btn" onclick="cambiarSemana(1)">Siguiente ›</button>
+    </div>
+
+    <!-- Grid semanal -->
+    <div class="cal-container">
+        <div class="cal-grid" id="calGrid">
+            <!-- generado por JS -->
+        </div>
+    </div>
+
+    <!-- Modal: agregar evento -->
+    <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+        <div class="modal-box">
+            <h3 id="modalTitle">Agregar plan</h3>
+            <p id="modalDate" class="modal-date-label"></p>
+
+            <input  type="text"     id="evTitulo"  placeholder="¿Qué harán? (ej: cine 🎬)" maxlength="100">
+            <textarea               id="evDesc"    placeholder="Detalles opcionales... 🌸"  maxlength="300" rows="3"></textarea>
+
+            <div class="color-row">
+                <span>Color:</span>
+                <label class="color-chip" style="background:#e91e8c"><input type="radio" name="evColor" value="#e91e8c" checked></label>
+                <label class="color-chip" style="background:#5a5af0"><input type="radio" name="evColor" value="#5a5af0"></label>
+                <label class="color-chip" style="background:#00b4d8"><input type="radio" name="evColor" value="#00b4d8"></label>
+                <label class="color-chip" style="background:#22c55e"><input type="radio" name="evColor" value="#22c55e"></label>
+                <label class="color-chip" style="background:#f59e0b"><input type="radio" name="evColor" value="#f59e0b"></label>
+                <label class="color-chip" style="background:#ef4444"><input type="radio" name="evColor" value="#ef4444"></label>
+            </div>
+
+            <p id="evError" class="ev-error"></p>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-save"   onclick="guardarEvento()">Agregar 💌</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Hecho con 💖 solo para ti</p>
+    </footer>
+
+    <script src="calendario.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>

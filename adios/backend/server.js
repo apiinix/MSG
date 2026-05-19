@@ -332,5 +332,46 @@ app.delete('/api/photos/:id', auth, async (req, res) => {
     } catch { res.status(500).json({ error: 'Error' }); }
 });
 
+// ── Calendario ────────────────────────────────────────────────────────────────
+const calEventSchema = new mongoose.Schema({
+    titulo:    { type: String, required: true, maxlength: 100 },
+    fecha:     { type: String, required: true, maxlength: 10 }, // YYYY-MM-DD
+    desc:      { type: String, maxlength: 300 },
+    color:     { type: String, default: '#e91e8c', maxlength: 20 },
+    creadoPor: { type: String, maxlength: 30 },
+    createdAt: { type: Date, default: Date.now }
+});
+const CalEvent = mongoose.model('CalEvent', calEventSchema);
+
+app.get('/api/calendar', auth, async (_req, res) => {
+    try {
+        const events = await CalEvent.find().sort({ fecha: 1, createdAt: 1 });
+        res.json(events);
+    } catch { res.status(500).json({ error: 'Error' }); }
+});
+
+app.post('/api/calendar', auth, async (req, res) => {
+    try {
+        const { titulo, fecha, desc, color } = req.body;
+        if (!titulo || !fecha) return res.status(400).json({ error: 'titulo y fecha requeridos' });
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return res.status(400).json({ error: 'fecha inválida' });
+        const ev = await CalEvent.create({
+            titulo: titulo.trim().slice(0, 100),
+            fecha,
+            desc:      desc      ? desc.trim().slice(0, 300)  : '',
+            color:     color     || '#e91e8c',
+            creadoPor: req.user?.username || ''
+        });
+        res.status(201).json(ev);
+    } catch { res.status(500).json({ error: 'Error' }); }
+});
+
+app.delete('/api/calendar/:id', auth, async (req, res) => {
+    try {
+        await CalEvent.findByIdAndDelete(req.params.id);
+        res.json({ ok: true });
+    } catch { res.status(500).json({ error: 'Error' }); }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Servidor en puerto ${PORT}`));

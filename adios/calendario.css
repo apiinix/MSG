@@ -1,0 +1,258 @@
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --pink:    #e91e8c;
+    --purple:  #5a5af0;
+    --ocean:   #00b4d8;
+    --bg:      #0a0a1a;
+    --card:    #12122a;
+    --border:  #1e1e3a;
+    --text:    #e0e0f0;
+    --muted:   #7070a0;
+    --radius:  14px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Hearts flotantes ────────────────────────────────────────────────────── */
+.hearts {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
+}
+.hearts span {
+    position: absolute; font-size: 1.4rem; opacity: 0.08;
+    animation: floatHeart 12s infinite linear;
+}
+.hearts span:nth-child(1)  { left:5%;  animation-delay:0s;    animation-duration:14s; }
+.hearts span:nth-child(2)  { left:15%; animation-delay:2s;    animation-duration:11s; }
+.hearts span:nth-child(3)  { left:28%; animation-delay:4s;    animation-duration:16s; }
+.hearts span:nth-child(4)  { left:42%; animation-delay:1s;    animation-duration:13s; }
+.hearts span:nth-child(5)  { left:58%; animation-delay:5s;    animation-duration:12s; }
+.hearts span:nth-child(6)  { left:70%; animation-delay:3s;    animation-duration:15s; }
+.hearts span:nth-child(7)  { left:83%; animation-delay:6s;    animation-duration:10s; }
+.hearts span:nth-child(8)  { left:93%; animation-delay:1.5s;  animation-duration:17s; }
+@keyframes floatHeart {
+    0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.08; }
+    90%  { opacity: 0.08; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ── User bar ─────────────────────────────────────────────────────────────── */
+.user-bar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(10,10,26,.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    font-size: 0.88rem; color: var(--muted);
+}
+.user-bar span { margin-left: auto; }
+.back-btn {
+    color: var(--ocean); text-decoration: none; font-weight: 600;
+    font-size: 0.88rem; transition: opacity .2s;
+}
+.back-btn:hover { opacity: .7; }
+.logout-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem;
+    transition: border-color .2s, color .2s;
+}
+.logout-btn:hover { border-color: var(--pink); color: var(--pink); }
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.cal-header {
+    text-align: center; padding: 36px 20px 12px; position: relative; z-index: 1;
+}
+.cal-header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    background: linear-gradient(135deg, var(--ocean), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cal-header p { color: var(--muted); font-size: .9rem; margin-top: 6px; }
+
+/* ── Week nav ─────────────────────────────────────────────────────────────── */
+.week-nav {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    padding: 14px 20px; position: relative; z-index: 1;
+}
+.week-btn {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--ocean); padding: 8px 18px; border-radius: 22px;
+    cursor: pointer; font-size: .88rem; font-family: 'Poppins', sans-serif;
+    transition: background .2s, border-color .2s;
+}
+.week-btn:hover { background: rgba(0,180,216,.12); border-color: var(--ocean); }
+.week-label {
+    font-size: .95rem; font-weight: 600; color: var(--text);
+    min-width: 220px; text-align: center;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────────── */
+.cal-container {
+    max-width: 1100px; margin: 0 auto; padding: 0 16px 60px;
+    position: relative; z-index: 1;
+}
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+@media (max-width: 800px) {
+    .cal-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 520px) {
+    .cal-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Columna de día ───────────────────────────────────────────────────────── */
+.cal-day {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 10px 10px;
+    min-height: 160px;
+    display: flex; flex-direction: column; gap: 8px;
+    cursor: pointer;
+    transition: border-color .2s, transform .15s;
+    position: relative;
+}
+.cal-day:hover { border-color: var(--ocean); transform: translateY(-2px); }
+.cal-day.today { border-color: var(--pink); background: rgba(233,30,140,.05); }
+
+.cal-day-header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border); padding-bottom: 7px;
+}
+.day-name { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.day-num  { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+.day-num.today-num {
+    background: var(--pink); color: #fff;
+    border-radius: 50%; width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .95rem;
+}
+
+/* ── Eventos ──────────────────────────────────────────────────────────────── */
+.cal-events { flex: 1; display: flex; flex-direction: column; gap: 5px; overflow: hidden; }
+
+.cal-event {
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid var(--pink);
+    border-radius: 6px;
+    padding: 5px 22px 5px 7px;
+    position: relative;
+    font-size: .78rem;
+    display: flex; flex-direction: column; gap: 1px;
+}
+.ev-titulo { font-weight: 600; color: var(--text); word-break: break-word; }
+.ev-desc   { color: var(--muted); font-size: .72rem; word-break: break-word; }
+.ev-autor  { color: #4a4a7a; font-size: .68rem; }
+.ev-del {
+    position: absolute; top: 3px; right: 4px;
+    background: none; border: none; cursor: pointer;
+    color: #444; font-size: .7rem; line-height: 1;
+    padding: 2px 4px; border-radius: 4px; transition: color .2s;
+}
+.ev-del:hover { color: #ef4444; }
+
+.cal-empty { color: #2e2e4a; font-size: .75rem; font-style: italic; text-align: center; margin-top: 6px; }
+
+/* ── Botón + agregar ──────────────────────────────────────────────────────── */
+.add-ev-btn {
+    margin-top: auto; background: none;
+    border: 1px dashed var(--border); border-radius: 8px;
+    color: var(--muted); font-size: .75rem;
+    padding: 5px; cursor: pointer; width: 100%;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color .2s, color .2s;
+}
+.add-ev-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+
+/* ── Modal ────────────────────────────────────────────────────────────────── */
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal-box {
+    background: #161630; border: 1px solid var(--border);
+    border-radius: 18px; padding: 28px 28px 22px;
+    width: 100%; max-width: 400px; margin: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    transform: translateY(20px); transition: transform .22s;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-box h3 { font-size: 1.1rem; color: var(--ocean); font-weight: 600; }
+.modal-date-label { color: var(--muted); font-size: .85rem; margin-top: -8px; }
+
+.modal-box input[type="text"],
+.modal-box textarea {
+    background: #0d0d20; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text); font-family: 'Poppins', sans-serif;
+    font-size: .9rem; padding: 11px 14px; outline: none; resize: none;
+    transition: border-color .2s;
+    width: 100%;
+}
+.modal-box input:focus,
+.modal-box textarea:focus { border-color: var(--ocean); }
+
+/* ── Color chips ──────────────────────────────────────────────────────────── */
+.color-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-size: .82rem; color: var(--muted);
+}
+.color-chip {
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid transparent; transition: transform .15s, border-color .15s;
+}
+.color-chip:has(input:checked) { border-color: #fff; transform: scale(1.2); }
+.color-chip input { position: absolute; opacity: 0; pointer-events: none; }
+
+/* ── Error y acciones ─────────────────────────────────────────────────────── */
+.ev-error { color: #f87171; font-size: .8rem; min-height: 16px; }
+
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px; }
+.btn-cancel {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    padding: 9px 20px; border-radius: 10px; cursor: pointer;
+    font-family: 'Poppins', sans-serif; font-size: .88rem;
+    transition: border-color .2s;
+}
+.btn-cancel:hover { border-color: var(--muted); }
+.btn-save {
+    background: linear-gradient(135deg, var(--pink), #c0185c);
+    color: #fff; border: none; padding: 9px 22px; border-radius: 10px;
+    cursor: pointer; font-family: 'Poppins', sans-serif; font-size: .88rem;
+    font-weight: 600; transition: opacity .2s;
+}
+.btn-save:hover:not(:disabled) { opacity: .85; }
+.btn-save:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+footer { text-align: center; padding: 30px; color: #2a2a4a; font-size: .8rem; position: relative; z-index: 1; }
+
+/* ── Ocean theme overrides ────────────────────────────────────────────────── */
+[data-theme="ocean"] .cal-day:hover    { border-color: var(--ocean); }
+[data-theme="ocean"] .add-ev-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+[data-theme="ocean"] .modal-box h3     { color: var(--ocean); }
+
+/* ── Pink theme ───────────────────────────────────────────────────────────── */
+[data-theme="pink"] {
+    --ocean:  var(--pink);
+    --purple: #d44eaf;
+}
