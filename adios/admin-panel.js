@@ -34,6 +34,8 @@ function showPanel() {
     document.getElementById('adminLogin').classList.add('hidden');
     document.getElementById('adminPanel').classList.remove('hidden');
     loadUsers();
+    loadCarta();
+    loadFrases();
 }
 
 function adminLogout() {
@@ -174,3 +176,94 @@ window.addEventListener('DOMContentLoaded', () => {
     const saved = sessionStorage.getItem('adminToken');
     if (saved) { adminToken = saved; showPanel(); }
 });
+
+// ── Carta ─────────────────────────────────────────────────────────────────────
+async function loadCarta() {
+    try {
+        const res  = await fetch(`${API_URL}/api/settings`);
+        const data = await res.json();
+        document.getElementById('cartaEditor').value = data.carta || '';
+    } catch { /* silent */ }
+}
+
+async function guardarCarta() {
+    const carta  = document.getElementById('cartaEditor').value;
+    const status = document.getElementById('cartaStatus');
+    try {
+        await adminFetch('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ carta }) });
+        status.textContent = '✅ Guardada';
+        setTimeout(() => { status.textContent = ''; }, 2500);
+    } catch { status.textContent = '❌ Error al guardar'; }
+}
+
+// ── Frases ────────────────────────────────────────────────────────────────────
+let _adminFrases = [];
+
+async function loadFrases() {
+    try {
+        const res  = await fetch(`${API_URL}/api/settings`);
+        const data = await res.json();
+        _adminFrases = Array.isArray(data.frases) ? data.frases : [];
+        renderFrasesAdmin();
+    } catch { /* silent */ }
+}
+
+function renderFrasesAdmin() {
+    const list = document.getElementById('frasesList');
+    if (!_adminFrases.length) { list.innerHTML = '<p style="color:#666;font-size:0.85rem;">Sin frases.</p>'; return; }
+    list.innerHTML = _adminFrases.map((f, i) => `
+        <div class="frase-admin-row" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="flex:1;font-size:0.85rem;color:#bbb;">${escapeHtml(f)}</span>
+            <button class="btn-sm btn-delete" onclick="eliminarFrase(${i})">✕</button>
+        </div>`).join('');
+}
+
+function agregarFrase() {
+    const input = document.getElementById('nuevaFrase');
+    const frase = input.value.trim();
+    if (!frase) return;
+    _adminFrases.push(frase);
+    input.value = '';
+    renderFrasesAdmin();
+}
+
+function eliminarFrase(idx) {
+    _adminFrases.splice(idx, 1);
+    renderFrasesAdmin();
+}
+
+async function guardarFrases() {
+    const status = document.getElementById('frasesStatus');
+    try {
+        await adminFetch('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ frases: _adminFrases }) });
+        status.textContent = '✅ Guardadas';
+        setTimeout(() => { status.textContent = ''; }, 2500);
+    } catch { status.textContent = '❌ Error al guardar'; }
+}
+
+// ── Historial de sesiones ─────────────────────────────────────────────────────
+async function loadSessions() {
+    const list = document.getElementById('sessionsList');
+    list.innerHTML = '<div class="loading-msg">Cargando...</div>';
+    try {
+        const logs = await adminFetch('/api/admin/sessions');
+        if (!logs || logs.length === 0) {
+            list.innerHTML = '<div class="empty-msg">Sin sesiones registradas.</div>';
+            return;
+        }
+        list.innerHTML = `
+            <table class="sessions-table">
+                <thead><tr><th>Usuario</th><th>IP</th><th>Fecha</th></tr></thead>
+                <tbody>${logs.map(l => `
+                    <tr>
+                        <td>👤 ${escapeHtml(l.username)}</td>
+                        <td>${escapeHtml(l.ip || '—')}</td>
+                        <td>${new Date(l.date).toLocaleString('es', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+    } catch {
+        list.innerHTML = '<div class="loading-msg">Error al cargar.</div>';
+    }
+}
+

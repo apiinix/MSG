@@ -37,15 +37,9 @@
             <div class="loading-msgs" id="loadingMsgs">Cargando mensajes 🌸</div>
         </main>
 
-        <!-- Panel de stickers -->
+        <!-- Panel de emojis completo -->
         <div class="sticker-picker" id="stickerPicker">
-            <div class="sticker-tabs">
-                <button class="sticker-tab active" data-cat="amor"   onclick="showStickerCat('amor')">💖</button>
-                <button class="sticker-tab"        data-cat="feliz"  onclick="showStickerCat('feliz')">😊</button>
-                <button class="sticker-tab"        data-cat="triste" onclick="showStickerCat('triste')">🥺</button>
-                <button class="sticker-tab"        data-cat="varios" onclick="showStickerCat('varios')">🌈</button>
-            </div>
-            <div class="sticker-grid" id="stickerGrid"></div>
+            <emoji-picker id="emojiPicker"></emoji-picker>
         </div>
 
         <!-- Barra de envío en progreso -->
@@ -58,9 +52,9 @@
         <footer class="chat-input-area">
             <button class="input-btn sticker-btn" onclick="toggleStickerPicker()" title="Stickers">😊</button>
 
-            <label class="input-btn attach-btn" title="Foto o video">
+            <label class="input-btn attach-btn" title="Foto, video o audio">
                 📎
-                <input type="file" id="fileInput" accept="image/*,video/*"
+                <input type="file" id="fileInput" accept="image/*,video/*,audio/*"
                        onchange="handleFileSelect(event)" hidden>
             </label>
 
@@ -86,6 +80,7 @@
         <button class="lightbox-close" onclick="closeLightbox()">×</button>
     </div>
 
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
     <script src="chat.js"></script>
     <script src="theme.js"></script>
 </body>

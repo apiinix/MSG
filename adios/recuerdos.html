@@ -26,6 +26,62 @@
             </div>
         </header>
 
+        <!-- Formulario para agregar clip -->
+        <div class="add-clip-panel">
+            <h3>➕ Agregar clip</h3>
+            <div class="add-clip-form">
+                <input type="text" id="clipTitulo" placeholder="Título (ej: Kill épico en Valorant)" maxlength="100">
+                <input type="text" id="clipFecha"  placeholder="Fecha (ej: 12 mayo 2025)" maxlength="30">
+                <textarea id="clipDesc" placeholder="Descripción del momento... 😂" maxlength="500" rows="2"></textarea>
+
+                <div class="clip-tipo-row">
+                    <label><input type="radio" name="clipTipo" value="url" checked> 🔗 URL de YouTube</label>
+                    <label><input type="radio" name="clipTipo" value="video"> 📁 Subir video</label>
+                </div>
+
+                <div id="clipUrlGroup">
+                    <input type="url" id="clipUrl" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <div id="clipFileGroup" style="display:none">
+                    <label class="file-pick-btn">
+                        📁 Seleccionar video (máx ~10MB)
+                        <input type="file" id="clipFile" accept="video/*" hidden>
+                    </label>
+                    <span id="clipFileName" class="file-name-hint"></span>
+                </div>
+
+                <button class="btn-add-clip" id="btnAddClip" onclick="agregarClip()">Agregar 🎮</button>
+                <div id="clipError" class="clip-msg hidden"></div>
+            </div>
+        </div>
+
+        <!-- Clips -->
+        <main class="nb-content" id="clipsContainer">
+            <div class="clips-loading">Cargando clips... 🎮</div>
+        </main>
+
+        <footer class="nb-footer">
+            <p>📓 Nuestro cuaderno de recuerdos 💖</p>
+        </footer>
+
+    </div>
+
+    <script src="clips.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>
+
+        <!-- Portada -->
+        <header class="nb-header">
+            <a href="niga.html" class="back-btn">← Volver</a>
+            <div class="nb-sticker">🎮</div>
+            <h1>Cuaderno de Recuerdos</h1>
+            <p>Todos nuestros clips épicos jugando juntas ✨</p>
+            <div class="nb-deco">
+                <span>🌸</span><span>⭐</span><span>🎯</span><span>💀</span><span>🏆</span><span>🎮</span>
+            </div>
+        </header>
+
         <!-- Clips -->
         <main class="nb-content">
 

@@ -35,28 +35,37 @@
         <!-- Carta -->
         <section class="card">
             <h2 class="section-title">✉️ Una carta para ti</h2>
-            <textarea readonly>¡Hola! Hice esta pequeña página para recordarte lo importante que eres en mi vida. Gracias por estar siempre ahí, por cada risa, cada consejo y por los momentos tan bonitos que pasamos juntas. ¡Te quiero muchísimo!</textarea>
+            <div id="cartaTexto" class="carta-texto">Cargando...</div>
         </section>
 
-        <!-- Secreto -->
+        <!-- Secreto / Frases motivacionales -->
         <section class="card">
             <h2 class="section-title">💡 Algo que debes saber</h2>
-            <button class="btn btn-pink" onclick="mostrarSecreto()">Haz clic aquí ✨</button>
-            <div id="secreto" class="mensaje-secreto hidden">
-                <span class="quote">❝</span>
-                Eres una persona increíble, valiente y divertida. El mundo es mucho más bonito contigo en él. ¡Nunca cambies tu forma de ser!
-                <span class="quote">❞</span>
+            <div class="frases-carousel" id="frasesCarousel">
+                <div id="fraseTexto" class="mensaje-secreto">
+                    <span class="quote">❝</span>
+                    <span id="fraseContenido">Cargando...</span>
+                    <span class="quote">❞</span>
+                </div>
+                <div class="frases-nav">
+                    <button class="btn-frase-nav" onclick="fraseAnterior()">‹</button>
+                    <span id="fraseIndicador" class="frase-indicador">1 / 1</span>
+                    <button class="btn-frase-nav" onclick="fraseSiguiente()">›</button>
+                </div>
             </div>
         </section>
 
         <!-- Fotos -->
         <section class="card">
             <h2 class="section-title">📸 Nuestros recuerdos</h2>
-            <p class="sub">Imagina aquí nuestras mejores fotos juntas.</p>
-            <div class="photos">
-                <div class="photo-box">Foto 1 💖</div>
-                <div class="photo-box">Foto 2 ✨</div>
-                <div class="photo-box">Foto 3 🌸</div>
+            <div class="photos-scroll" id="photosScroll">
+                <div class="photo-loading">Cargando fotos... 🌸</div>
+            </div>
+            <div class="photos-actions">
+                <label class="btn btn-pink btn-upload-photo">
+                    📷 Agregar foto
+                    <input type="file" id="photoInput" accept="image/*" hidden onchange="subirFoto(event)">
+                </label>
             </div>
         </section>
 

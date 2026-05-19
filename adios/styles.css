@@ -196,14 +196,95 @@ textarea {
 }
 .hidden { display: none; }
 
-/* Photos */
-.photos {
+/* Photos - scroll horizontal */
+.photos-scroll {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 10px;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 12px 4px 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #f48fb1 #fce4ec;
 }
+.photos-scroll::-webkit-scrollbar { height: 6px; }
+.photos-scroll::-webkit-scrollbar-track  { background: #fce4ec; border-radius: 3px; }
+.photos-scroll::-webkit-scrollbar-thumb  { background: #f48fb1; border-radius: 3px; }
+
+.photo-item {
+    position: relative;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    width: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(216,27,96,0.12);
+    background: #fce4ec;
+}
+.photo-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+.photo-caption {
+    font-size: 0.78rem;
+    color: #d81b60;
+    padding: 6px 10px;
+    text-align: center;
+    background: rgba(255,255,255,0.85);
+}
+.photo-del-btn {
+    position: absolute;
+    top: 6px; right: 6px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    color: #dc2626;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.2s;
+}
+.photo-del-btn:hover { background: #fecaca; }
+.photo-loading { color: #aaa; font-size: 0.9rem; padding: 30px 0; text-align: center; width: 100%; }
+.photos-actions { margin-top: 12px; display: flex; justify-content: center; }
+.btn-upload-photo { cursor: pointer; }
+
+/* Carta dinámica */
+.carta-texto {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,182,193,0.5);
+    border-radius: 14px;
+    padding: 20px 24px;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    min-height: 80px;
+}
+
+/* Frases carousel */
+.frases-carousel { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.frases-nav { display: flex; align-items: center; gap: 14px; }
+.btn-frase-nav {
+    background: linear-gradient(135deg, #e91e63, #f06292);
+    color: #fff;
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    line-height: 1;
+}
+.btn-frase-nav:hover { background: linear-gradient(135deg, #c2185b, #e91e63); transform: scale(1.1); }
+.frase-indicador { font-size: 0.82rem; color: #bbb; min-width: 40px; text-align: center; }
+
+/* Legacy photo-box (kept for compatibility) */
 .photo-box {
     width: 190px;
     height: 190px;
@@ -430,3 +511,13 @@ footer {
     border-color: rgba(0, 180, 216, 0.35);
 }
 [data-theme="ocean"] footer { color: #90caf9; }
+
+/* Ocean overrides for new elements */
+[data-theme="ocean"] .photos-scroll::-webkit-scrollbar-track { background: #e0f7fa; }
+[data-theme="ocean"] .photos-scroll::-webkit-scrollbar-thumb { background: #48cae4; }
+[data-theme="ocean"] .photo-item { box-shadow: 0 6px 18px rgba(0,119,182,0.12); }
+[data-theme="ocean"] .carta-texto { border-color: rgba(0,180,216,0.4); }
+[data-theme="ocean"] .btn-frase-nav {
+    background: linear-gradient(135deg, #0077b6, #00b4d8);
+}
+[data-theme="ocean"] .btn-frase-nav:hover { background: linear-gradient(135deg, #023e8a, #0077b6); }

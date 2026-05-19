@@ -313,6 +313,21 @@ body {
     text-align: center;
 }
 
+/* ── Sessions table ──────────────────────────────────────────────────────────── */
+.sessions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+}
+.sessions-table th, .sessions-table td {
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid #1e1e3a;
+}
+.sessions-table th { color: #9090d8; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.sessions-table tr:hover td { background: rgba(90,90,240,0.05); }
+.sessions-list { max-height: 340px; overflow-y: auto; }
+
 /* ── RESPONSIVE ─────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
     .admin-header { padding: 16px 20px; }

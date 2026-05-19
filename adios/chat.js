@@ -23,15 +23,26 @@ function init() {
     ME = localStorage.getItem('username') || '';
     document.getElementById('chatStatus').textContent = `Conectada como ${ME} 🌸`;
 
-    showStickerCat('amor');
+    // Emoji picker
+    const picker = document.getElementById('emojiPicker');
+    if (picker) {
+        picker.addEventListener('emoji-click', e => {
+            const input = document.getElementById('msgInput');
+            const pos   = input.selectionStart || input.value.length;
+            input.value = input.value.slice(0, pos) + e.detail.unicode + input.value.slice(pos);
+            input.focus();
+            toggleStickerPicker();
+            autoResize(input);
+        });
+    }
 
-    // Cerrar sticker picker al hacer clic fuera
+    // Cerrar emoji picker al hacer clic fuera
     document.addEventListener('click', (e) => {
-        const picker = document.getElementById('stickerPicker');
-        if (picker.classList.contains('open') &&
-            !picker.contains(e.target) &&
+        const stickerPanel = document.getElementById('stickerPicker');
+        if (stickerPanel.classList.contains('open') &&
+            !stickerPanel.contains(e.target) &&
             !e.target.closest('.sticker-btn')) {
-            picker.classList.remove('open');
+            stickerPanel.classList.remove('open');
         }
     });
 

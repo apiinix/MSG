@@ -242,7 +242,7 @@ html, body {
     .msg-wrapper.mine .del-btn { display: flex; }
 }
 
-/* ── Panel de stickers ──────────────────────────────────────────────────────── */
+/* ── Panel de emojis ────────────────────────────────────────────────────────── */
 .sticker-picker {
     background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(20px);
@@ -251,22 +251,12 @@ html, body {
     transition: height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
 }
-.sticker-picker.open { height: 238px; }
-
-.sticker-tabs {
-    display: flex; border-bottom: 1px solid rgba(255, 182, 193, 0.3);
-    padding: 6px 10px 0;
-}
-.sticker-tab {
-    flex: 1; background: none; border: none; cursor: pointer;
-    font-size: 1.45rem; padding: 8px;
-    border-radius: 10px 10px 0 0;
-    border-bottom: 2.5px solid transparent;
-    transition: background 0.18s;
-}
-.sticker-tab.active {
-    background: rgba(233, 30, 140, 0.07);
-    border-bottom-color: var(--pink);
+.sticker-picker.open { height: 360px; }
+.sticker-picker emoji-picker {
+    --background: transparent;
+    --border-color: rgba(255,182,193,0.3);
+    width: 100%;
+    height: 360px;
 }
 .sticker-tab:hover { background: rgba(233, 30, 140, 0.05); }
 

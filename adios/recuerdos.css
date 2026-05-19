@@ -274,6 +274,94 @@ body {
     font-size: 1.4rem;
 }
 
+/* ── Panel agregar clip ─────────────────────────────────────────────────────── */
+.add-clip-panel {
+    margin: 0 30px 0 100px;
+    padding: 22px 28px;
+    background: #fdf6ff;
+    border: 2px dashed #c9a0dc;
+    border-radius: 14px;
+    position: relative;
+    z-index: 3;
+}
+.add-clip-panel h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: #7c3aed;
+    margin-bottom: 14px;
+}
+.add-clip-form { display: flex; flex-direction: column; gap: 10px; }
+.add-clip-form input[type="text"],
+.add-clip-form input[type="url"],
+.add-clip-form textarea {
+    padding: 10px 14px;
+    border: 1.5px solid #d4b8e8;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    color: #555;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+}
+.add-clip-form input:focus,
+.add-clip-form textarea:focus { border-color: #7c3aed; }
+.clip-tipo-row { display: flex; gap: 20px; font-size: 0.9rem; color: #666; }
+.clip-tipo-row label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.file-pick-btn {
+    display: inline-block;
+    padding: 9px 18px;
+    background: #ede9fe;
+    color: #7c3aed;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.file-pick-btn:hover { background: #ddd6fe; }
+.file-name-hint { font-size: 0.78rem; color: #888; margin-left: 8px; }
+.btn-add-clip {
+    align-self: flex-start;
+    padding: 11px 28px;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-add-clip:hover:not(:disabled) { background: linear-gradient(135deg, #6d28d9, #9333ea); transform: translateY(-2px); }
+.btn-add-clip:disabled { opacity: 0.5; cursor: not-allowed; }
+.clip-msg { font-size: 0.84rem; color: #c2185b; background: #fce4ec; padding: 8px 12px; border-radius: 8px; }
+.clips-loading { text-align: center; color: #999; font-style: italic; padding: 40px; font-size: 1rem; }
+
+/* ── Botón eliminar clip ──────────────────────────────────────────────────── */
+.clip-card { position: relative; }
+.clip-del-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(220,38,38,0.12);
+    border: none;
+    color: #dc2626;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    z-index: 5;
+}
+.clip-del-btn:hover { background: rgba(220,38,38,0.25); }
+
+@media (max-width: 620px) {
+    .add-clip-panel { margin: 0 12px 0 16px; padding: 16px; }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    TEMA OCÉANO  🌊
    ══════════════════════════════════════════════════════════════════════════ */

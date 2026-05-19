@@ -61,6 +61,39 @@
                 </div>
             </section>
 
+            <!-- Carta para ti -->
+            <section class="admin-card">
+                <h2>✉️ Carta "Para ti"</h2>
+                <textarea id="cartaEditor" rows="6" placeholder="Escribe la carta..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #2a2a5a;background:#0d1117;color:#e0e0f0;font-size:0.93rem;font-family:inherit;resize:vertical;outline:none;"></textarea>
+                <div style="margin-top:10px;display:flex;gap:10px;align-items:center;">
+                    <button class="btn-admin btn-create" onclick="guardarCarta()">Guardar carta</button>
+                    <span id="cartaStatus" style="font-size:0.82rem;color:#4ade80;"></span>
+                </div>
+            </section>
+
+            <!-- Frases motivacionales -->
+            <section class="admin-card">
+                <h2>💡 Frases motivacionales</h2>
+                <div id="frasesList" class="frases-admin-list"></div>
+                <div style="margin-top:12px;display:flex;gap:8px;">
+                    <input type="text" id="nuevaFrase" placeholder="Escribe una nueva frase..." maxlength="300" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid #2a2a5a;background:#0d1117;color:#e0e0f0;font-size:0.88rem;outline:none;">
+                    <button class="btn-admin btn-create" onclick="agregarFrase()">Agregar</button>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:10px;align-items:center;">
+                    <button class="btn-admin btn-create" onclick="guardarFrases()">Guardar frases</button>
+                    <span id="frasesStatus" style="font-size:0.82rem;color:#4ade80;"></span>
+                </div>
+            </section>
+
+            <!-- Historial de sesiones -->
+            <section class="admin-card">
+                <h2>🕵️ Historial de sesiones</h2>
+                <button class="btn-admin btn-create" onclick="loadSessions()" style="margin-bottom:14px;">Actualizar</button>
+                <div id="sessionsList" class="sessions-list">
+                    <div class="loading-msg">Haz clic en "Actualizar"</div>
+                </div>
+            </section>
+
         </main>
     </div>
 
